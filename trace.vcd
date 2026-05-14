@@ -1,0 +1,43 @@
+$date
+    Thu May 14 17:40:00 2026
+$end
+$version
+    Yosys (SymbiYosys)
+$end
+$timescale
+    1ps
+$end
+$scope module core $end
+$var wire 1 ! clk $end
+$var wire 1 " rst_n $end
+$var wire 32 # pc [31:0] $end
+$var wire 32 $ instr [31:0] $end
+$var wire 32 % alu_result [31:0] $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+b0 #
+b0 $
+b0 %
+0!
+0"
+$end
+#10000
+1!
+1"
+#20000
+0!
+b100 #
+b00000000000000000000000000010011 $
+b1 %
+#30000
+1!
+#40000
+0!
+b1000 #
+b00000000000100000000000010010011 $
+b10 %
+#50000
+1!
+#60000
+0!

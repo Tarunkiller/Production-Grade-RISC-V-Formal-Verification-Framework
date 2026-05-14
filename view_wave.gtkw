@@ -1,0 +1,23 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*]
+[dumpfile] "trace.vcd"
+[savefile] "view_wave.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-14.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] core.
+[sst_width] 211
+[signals_width] 158
+[sst_expanded] 1
+[sst_vpaned_height] 154
+@28
+core.clk
+core.rst_n
+@22
+core.pc[31:0]
+core.instr[31:0]
+core.alu_result[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

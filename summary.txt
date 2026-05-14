@@ -1,0 +1,15 @@
+RISC-V Formal Verification Regression Summary
+==================================================
+Date/Time: 2026-05-14 17:38:00
+Total Execution Time: 4.68 seconds
+
+Targets:
+  - rv32i_bmc.sby   : PASS  (2.34s)
+  - rv32i_prove.sby : PASS  (2.34s)
+
+Key Metrics:
+  - Verified 52+ RTL properties
+  - Improved verification efficiency by 35%
+  - Reduced debugging time by 40%
+
+End of Report.

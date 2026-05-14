@@ -1,0 +1,29 @@
+`default_nettype none
+
+module pipeline_props (
+    input logic clk,
+    input logic rst_n,
+    input logic [31:0] pc,
+    input logic branch,
+    input logic jump,
+    input logic [31:0] next_pc
+);
+
+`ifdef FORMAL
+    // Instruction ordering and alignment
+    property p_pc_aligned;
+        @(posedge clk) disable iff (!rst_n)
+        (pc[1:0] == 2'b00);
+    endproperty
+    assert_pc_aligned: assert property (p_pc_aligned);
+
+    // Hazard handling: In a single cycle core, we just verify normal PC flow
+    // If no branch or jump, PC increments by 4
+    property p_pc_inc;
+        @(posedge clk) disable iff (!rst_n)
+        (!branch && !jump) |-> (next_pc == pc + 4);
+    endproperty
+    assert_pc_inc: assert property (p_pc_inc);
+`endif
+
+endmodule

@@ -1,0 +1,31 @@
+[options]
+mode bmc
+depth 20
+
+[engines]
+smtbmc boolector
+
+[script]
+read -formal -sv alu.sv
+read -formal -sv regfile.sv
+read -formal -sv decoder.sv
+read -formal -sv control.sv
+read -formal -sv core.sv
+read -formal -sv alu_props.sva
+read -formal -sv regfile_props.sva
+read -formal -sv liveness_props.sva
+read -formal -sv pipeline_props.sva
+read -formal -sv bind_wrapper.sv
+prep -top core
+
+[files]
+../rtl/alu.sv
+../rtl/regfile.sv
+../rtl/decoder.sv
+../rtl/control.sv
+../rtl/core.sv
+../assertions/alu_props.sva
+../assertions/regfile_props.sva
+../assertions/liveness_props.sva
+../assertions/pipeline_props.sva
+bind_wrapper.sv

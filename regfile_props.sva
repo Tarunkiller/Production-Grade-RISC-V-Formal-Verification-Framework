@@ -1,0 +1,45 @@
+`default_nettype none
+
+module regfile_props (
+    input logic clk,
+    input logic we,
+    input logic [4:0] rs1_addr,
+    input logic [4:0] rs2_addr,
+    input logic [4:0] rd_addr,
+    input logic [31:0] rd_data,
+    input logic [31:0] rs1_data,
+    input logic [31:0] rs2_data,
+    input logic [31:0] r0_val
+);
+
+`ifdef FORMAL
+    // Register x0 must always be 0
+    property p_reg0_always_zero;
+        @(posedge clk) (r0_val == 32'b0);
+    endproperty
+    assert_reg0_zero: assert property (p_reg0_always_zero);
+
+    // Read after write forwarding check
+    property p_raw_rs1;
+        @(posedge clk) (we && (rd_addr == rs1_addr) && (rs1_addr != 0)) |-> (rs1_data == rd_data);
+    endproperty
+    assert_raw_rs1: assert property (p_raw_rs1);
+
+    property p_raw_rs2;
+        @(posedge clk) (we && (rd_addr == rs2_addr) && (rs2_addr != 0)) |-> (rs2_data == rd_data);
+    endproperty
+    assert_raw_rs2: assert property (p_raw_rs2);
+
+    // Read zero check
+    property p_read_zero_rs1;
+        @(posedge clk) (rs1_addr == 0) |-> (rs1_data == 0);
+    endproperty
+    assert_read_zero_rs1: assert property (p_read_zero_rs1);
+
+    property p_read_zero_rs2;
+        @(posedge clk) (rs2_addr == 0) |-> (rs2_data == 0);
+    endproperty
+    assert_read_zero_rs2: assert property (p_read_zero_rs2);
+`endif
+
+endmodule

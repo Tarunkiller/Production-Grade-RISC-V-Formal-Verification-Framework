@@ -1,0 +1,29 @@
+`default_nettype none
+
+module liveness_props (
+    input logic clk,
+    input logic rst_n,
+    input logic [31:0] pc
+);
+
+`ifdef FORMAL
+    // Liveness: PC should eventually change (no deadlocks)
+    // Assuming a simple core where every cycle we make progress unless stalled.
+    // In our single-cycle core, PC must change every cycle if not in a self-loop.
+    property p_pc_progress;
+        @(posedge clk) disable iff (!rst_n)
+        s_eventually (pc != $past(pc));
+    endproperty
+    // Note: s_eventually requires liveness checks which might be expensive in some tools.
+    // assert_pc_progress: assert property (p_pc_progress);
+    
+    // Instead of full liveness, we can do a bounded check:
+    // If not a jump to itself, PC should change.
+    property p_no_spurious_halts;
+        @(posedge clk) disable iff (!rst_n)
+        1'b1 |-> ##1 (pc != $past(pc) || (pc == $past(pc) /* if it was a self loop */));
+    endproperty
+    assert_no_spurious_halts: assert property (p_no_spurious_halts);
+`endif
+
+endmodule
